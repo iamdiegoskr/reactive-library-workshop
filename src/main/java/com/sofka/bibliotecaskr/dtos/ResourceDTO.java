@@ -22,6 +22,17 @@ public class ResourceDTO {
     public ResourceDTO() {
     }
 
+    public ResourceDTO(String id, String name, String kind, String thematic,
+                       Integer quantityAvailable, Integer amountBorrowed, LocalDate localDate) {
+        this.id = id;
+        this.name = name;
+        this.kind = kind;
+        this.thematic = thematic;
+        this.quantityAvailable = quantityAvailable;
+        this.amountBorrowed = amountBorrowed;
+        this.localDate = localDate;
+    }
+
     public String getId() {
         return id;
     }

@@ -1,36 +1,18 @@
 package com.sofka.bibliotecaskr.dtos;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public class ResourceDTO {
-    @NotBlank
+
     private String id;
-    @NotBlank
     private String name;
-    @NotBlank
     private String kind;
-    @NotBlank
     private String thematic;
-    @NotBlank
     private Integer quantityAvailable;
-    @NotBlank
     private Integer amountBorrowed;
-    @NotBlank
     private LocalDate localDate;
 
     public ResourceDTO() {
-    }
-
-    public ResourceDTO(String id, String name, String kind, String thematic,
-                       Integer quantityAvailable, Integer amountBorrowed, LocalDate localDate) {
-        this.id = id;
-        this.name = name;
-        this.kind = kind;
-        this.thematic = thematic;
-        this.quantityAvailable = quantityAvailable;
-        this.amountBorrowed = amountBorrowed;
-        this.localDate = localDate;
     }
 
     public String getId() {

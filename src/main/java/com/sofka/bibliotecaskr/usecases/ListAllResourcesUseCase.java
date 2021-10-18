@@ -1,7 +1,7 @@
 package com.sofka.bibliotecaskr.usecases;
 
 import com.sofka.bibliotecaskr.dtos.ResourceDTO;
-import com.sofka.bibliotecaskr.mappers.MappersUtils;
+import com.sofka.bibliotecaskr.mappers.ResourceMapper;
 import com.sofka.bibliotecaskr.repositories.ResourceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -14,15 +14,15 @@ import java.util.function.Supplier;
 public class ListAllResourcesUseCase implements Supplier<Flux<ResourceDTO>> {
 
     private final ResourceRepository repository;
-    private final MappersUtils mapper;
+    private final ResourceMapper mapper;
 
-    public ListAllResourcesUseCase(ResourceRepository repository, MappersUtils mapper) {
+    public ListAllResourcesUseCase(ResourceRepository repository, ResourceMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
     @Override
     public Flux<ResourceDTO> get() {
-        return repository.findAll().map(mapper.mapperToResourceDTO());
+        return repository.findAll().map(mapper::toResourceDto);
     }
 }

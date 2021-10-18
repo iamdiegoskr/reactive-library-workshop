@@ -112,7 +112,16 @@ public class ResourceRouter {
         );
     }
 
-
+    @Bean
+    public RouterFunction<ServerResponse> recommendByType(RecommendResourceByTypeUseCase recommendByTypeUseCase) {
+        return route(
+                GET("/resources/recommendByType/{type}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(recommendByTypeUseCase.get(request.pathVariable("type")), ResourceDTO.class)
+                        ).onErrorResume(error -> ServerResponse.badRequest().build())
+        );
+    }
 
 
 }

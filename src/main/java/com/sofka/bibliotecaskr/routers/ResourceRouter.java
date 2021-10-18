@@ -134,5 +134,17 @@ public class ResourceRouter {
         );
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> recommendByTypeAndThematic(RecommendByTypeAndThematicUseCase recommendByTypeAndThematicUseCase) {
+        return route(
+                GET("/resources/recommendByTypeAndThematic/{kind}/{thematic}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(recommendByTypeAndThematicUseCase.get(request.pathVariable("kind"),
+                                request.pathVariable("thematic")), ResourceDTO.class)
+                        ).onErrorResume(error -> ServerResponse.badRequest().build())
+        );
+    }
+
 
 }

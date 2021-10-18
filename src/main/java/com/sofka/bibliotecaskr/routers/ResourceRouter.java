@@ -101,6 +101,17 @@ public class ResourceRouter {
         );
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> backResource(ReturnResourceUseCase returnResourceUseCase) {
+        return route(
+                PUT("/resources/return/{id}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(returnResourceUseCase.apply(request.pathVariable("id")), String.class))
+                        .onErrorResume(error -> ServerResponse.badRequest().build())
+        );
+    }
+
 
 
 

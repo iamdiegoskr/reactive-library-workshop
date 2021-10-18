@@ -4,6 +4,7 @@ import com.sofka.bibliotecaskr.dtos.ResourceDTO;
 import com.sofka.bibliotecaskr.usecases.CreateResourceUseCase;
 import com.sofka.bibliotecaskr.usecases.GetResourceUseCase;
 import com.sofka.bibliotecaskr.usecases.ListAllResourcesUseCase;
+import com.sofka.bibliotecaskr.usecases.UpdateResourceUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -44,7 +45,7 @@ public class ResourceRouter {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> save(CreateResourceUseCase saveResourceUseCase) {
+    public RouterFunction<ServerResponse> create(CreateResourceUseCase saveResourceUseCase) {
         Function<ResourceDTO, Mono<ServerResponse>> executor = resourceDTO -> saveResourceUseCase.apply(resourceDTO)
                 .flatMap(result -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
@@ -55,6 +56,23 @@ public class ResourceRouter {
                 request -> request.bodyToMono(ResourceDTO.class).flatMap(executor)
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> update(UpdateResourceUseCase updateResourceUseCase) {
+        Function<ResourceDTO, Mono<ServerResponse>> executor = resourceDTO -> updateResourceUseCase.apply(resourceDTO)
+                .flatMap(result -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(result));
+
+        return route(
+                PUT("/resources/edit")
+                        .and(accept(MediaType.APPLICATION_JSON)), request -> request
+                        .bodyToMono(ResourceDTO.class)
+                        .flatMap(executor)
+        );
+    }
+
+
 
 
 

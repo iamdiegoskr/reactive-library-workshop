@@ -21,6 +21,6 @@ public class RecommendResourceByThematicUseCase implements RecommendByThematic{
 
     @Override
     public Flux<ResourceDTO> get(String thematic) {
-        return repository.findAllByThematic(thematic).map(mapper::toResourceDto);
+        return repository.findAllByThematic(thematic).map(resource -> mapper.mapEntityToResourceDTO().apply(resource));
     }
 }

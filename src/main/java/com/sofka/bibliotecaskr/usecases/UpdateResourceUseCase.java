@@ -25,7 +25,7 @@ public class UpdateResourceUseCase implements SaveResource{
     @Override
     public Mono<ResourceDTO> apply(ResourceDTO resourceDTO) {
         Objects.requireNonNull(resourceDTO.getId(), "El id es requerido");
-        return repository.save(mapper.toResource(resourceDTO))
-                .map(mapper::toResourceDto);
+        return repository.save(mapper.mapperToResourceEntity().apply(resourceDTO))
+                .map(resource -> mapper.mapEntityToResourceDTO().apply(resource));
     }
 }

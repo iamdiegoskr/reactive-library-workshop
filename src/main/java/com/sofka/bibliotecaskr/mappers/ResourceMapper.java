@@ -2,18 +2,38 @@ package com.sofka.bibliotecaskr.mappers;
 
 import com.sofka.bibliotecaskr.collections.Resource;
 import com.sofka.bibliotecaskr.dtos.ResourceDTO;
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
 
-@Mapper(componentModel = "spring")
-public interface ResourceMapper {
+import java.util.function.Function;
 
-    ResourceDTO toResourceDto(Resource resource);
-    List<ResourceDTO> toResourcesDto(List<Resource> resources);
+@Component
+public class ResourceMapper {
 
-    @InheritInverseConfiguration
-    Resource toResource(ResourceDTO resourceDTO);
+    public Function<ResourceDTO, Resource> mapperToResourceEntity() {
+        return updateResource -> {
+            var resource = new Resource();
+            resource.setId(updateResource.getId());
+            resource.setName(updateResource.getName());
+            resource.setKind(updateResource.getKind());
+            resource.setThematic(updateResource.getThematic());
+            resource.setQuantityAvailable(updateResource.getQuantityAvailable());
+            resource.setAmountBorrowed(updateResource.getAmountBorrowed());
+            resource.setLocalDate(updateResource.getLocalDate());
+            return resource;
+        };
+    }
+
+    public Function<Resource, ResourceDTO> mapEntityToResourceDTO() {
+        return entity -> new ResourceDTO(
+                entity.getId(),
+                entity.getName(),
+                entity.getKind(),
+                entity.getThematic(),
+                entity.getQuantityAvailable(),
+                entity.getAmountBorrowed(),
+                entity.getLocalDate()
+        );
+    }
 
 }

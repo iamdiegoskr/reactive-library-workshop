@@ -21,6 +21,6 @@ public class RecommendByTypeAndThematicUseCase implements RecommendByTypeAndThem
 
     @Override
     public Flux<ResourceDTO> get(String kind, String thematic) {
-        return repository.findAllByKindAndThematic(kind,thematic).map(mapper::toResourceDto);
+        return repository.findAllByKindAndThematic(kind,thematic).map(resource -> mapper.mapEntityToResourceDTO().apply(resource));
     }
 }

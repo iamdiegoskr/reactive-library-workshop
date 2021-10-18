@@ -23,6 +23,6 @@ public class ListAllResourcesUseCase implements Supplier<Flux<ResourceDTO>> {
 
     @Override
     public Flux<ResourceDTO> get() {
-        return repository.findAll().map(mapper::toResourceDto);
+        return repository.findAll().map(resource -> mapper.mapEntityToResourceDTO().apply(resource));
     }
 }

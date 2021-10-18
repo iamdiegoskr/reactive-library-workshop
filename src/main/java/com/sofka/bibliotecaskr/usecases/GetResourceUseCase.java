@@ -25,6 +25,6 @@ public class GetResourceUseCase implements Function<String, Mono<ResourceDTO>> {
     @Override
     public Mono<ResourceDTO> apply(String id) {
         Objects.requireNonNull(id, "Id is required");
-        return repository.findById(id).map(mapper::toResourceDto);
+        return repository.findById(id).map(resource -> mapper.mapEntityToResourceDTO().apply(resource));
     }
 }

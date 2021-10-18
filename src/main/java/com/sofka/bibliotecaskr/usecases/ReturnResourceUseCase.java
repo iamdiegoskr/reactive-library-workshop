@@ -26,7 +26,7 @@ public class ReturnResourceUseCase  implements Function<String, Mono<String>> {
         return repository.findById(id).flatMap(resource -> {
             if(resource.getAmountBorrowed()>0){
                 resource.setAmountBorrowed(resource.getAmountBorrowed()-1);
-                return updateResourceUseCase.apply(mapper.toResourceDto(resource))
+                return updateResourceUseCase.apply(mapper.mapEntityToResourceDTO().apply(resource))
                         .thenReturn("El recurso fue devuelto con exito");
             }
             return Mono.just("No hay recursos por devolver");

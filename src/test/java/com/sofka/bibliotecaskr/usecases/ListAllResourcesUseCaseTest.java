@@ -6,7 +6,6 @@ import com.sofka.bibliotecaskr.mappers.ResourceMapper;
 import com.sofka.bibliotecaskr.repositories.ResourceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
@@ -19,12 +18,10 @@ class ListAllResourcesUseCaseTest {
     ResourceRepository repository;
     ListAllResourcesUseCase listUseCase;
 
-    @Autowired
-    private ResourceMapper mapper;
-
 
     @BeforeEach
     public void setup(){
+        ResourceMapper mapper = new ResourceMapper();
         repository = mock(ResourceRepository.class);
         listUseCase = new ListAllResourcesUseCase(repository, mapper);
     }

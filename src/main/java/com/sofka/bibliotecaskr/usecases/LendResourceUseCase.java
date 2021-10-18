@@ -32,7 +32,7 @@ public class LendResourceUseCase implements Function<String, Mono<String>> {
             if (resource.getQuantityAvailable()>resource.getAmountBorrowed()){
                 resource.setAmountBorrowed(resource.getAmountBorrowed()+1);
                 resource.setLocalDate(LocalDate.now());
-                return updateResourceUseCase.apply(mapper.toResourceDto(resource)).thenReturn("El recurso fue prestado con exito");
+                return updateResourceUseCase.apply(mapper.mapEntityToResourceDTO().apply(resource)).thenReturn("El recurso fue prestado con exito");
             }
             return Mono.just("El recurso no esta disponible en el momento, regresa pronto");
         });

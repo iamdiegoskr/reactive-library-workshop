@@ -22,7 +22,7 @@ public class CreateResourceUseCase implements SaveResource{
     @Override
     public Mono<ResourceDTO> apply(ResourceDTO resourceDTO) {
         return repository
-                .save(mapper.toResource(resourceDTO))
-                .map(mapper::toResourceDto);
+                .save(mapper.mapperToResourceEntity().apply(resourceDTO))
+                .map(resource -> mapper.mapEntityToResourceDTO().apply(resource));
     }
 }

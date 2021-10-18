@@ -21,6 +21,6 @@ public class RecommendResourceByTypeUseCase implements RecommendByType{
 
     @Override
     public Flux<ResourceDTO> get(String kind) {
-        return repository.findAllByKind(kind).map(mapper::toResourceDto);
+        return repository.findAllByKind(kind).map(resource -> mapper.mapEntityToResourceDTO().apply(resource));
     }
 }

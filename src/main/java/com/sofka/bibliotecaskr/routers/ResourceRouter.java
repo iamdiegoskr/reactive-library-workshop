@@ -79,7 +79,15 @@ public class ResourceRouter {
         );
     }
 
-
+    @Bean
+    public RouterFunction<ServerResponse> resourceAvailability(CheckAvailabilityUseCase checkAvailabilityUseCase) {
+        return route(GET("/resources/availability/{id}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(checkAvailabilityUseCase.apply(request.pathVariable("id")), String.class)
+                        )
+        );
+    }
 
 
 

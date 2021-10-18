@@ -1,10 +1,7 @@
 package com.sofka.bibliotecaskr.routers;
 
 import com.sofka.bibliotecaskr.dtos.ResourceDTO;
-import com.sofka.bibliotecaskr.usecases.CreateResourceUseCase;
-import com.sofka.bibliotecaskr.usecases.GetResourceUseCase;
-import com.sofka.bibliotecaskr.usecases.ListAllResourcesUseCase;
-import com.sofka.bibliotecaskr.usecases.UpdateResourceUseCase;
+import com.sofka.bibliotecaskr.usecases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -71,6 +68,18 @@ public class ResourceRouter {
                         .flatMap(executor)
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> delete(DeleteResourceUseCase deleteUseCase) {
+        return route(
+                DELETE("/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), Void.class))
+        );
+    }
+
+
 
 
 

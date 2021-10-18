@@ -90,6 +90,17 @@ public class ResourceRouter {
     }
 
 
+    @Bean
+    public RouterFunction<ServerResponse> lend(LendResourceUseCase lendUseCase) {
+        return route(
+                PUT("/resources/lend/{id}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(lendUseCase.apply(request.pathVariable("id")), String.class))
+                        .onErrorResume(error -> ServerResponse.badRequest().build())
+        );
+    }
+
 
 
 

@@ -28,7 +28,7 @@ class DeleteResourceRouterTest {
     private WebTestClient webTestClient;
 
     @Test
-    void testDeleteEmployee()
+    void testDeleteResource()
     {
         Mono<Void> voidReturn  = Mono.empty();
 

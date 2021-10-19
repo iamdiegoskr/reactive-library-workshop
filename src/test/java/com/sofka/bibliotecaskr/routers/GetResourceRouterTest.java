@@ -54,7 +54,10 @@ class GetResourceRouterTest {
                 .jsonPath("$.name").isEqualTo("Huelo el miedo")
                 .jsonPath("$.kind").isEqualTo("Libro")
                 .jsonPath("$.thematic").isEqualTo("Romance")
-                .jsonPath("$.quantityAvailable").isEqualTo(4);
+                .jsonPath("$.quantityAvailable").isEqualTo(4)
+                .jsonPath("$.amountBorrowed").isEqualTo(0)
+                .jsonPath("$.localDate").isEqualTo("2021-10-18");
+
 
         Mockito.verify(repository, times(1)).findById("xxx");
     }
